@@ -1,0 +1,19 @@
+
+
+name: docker push
+
+on:
+  push:
+    branches: [ "main", "master" ]
+ 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+   
+    steps:
+    - uses: actions/checkout@v4
+    - run: docker build . -t saksham1807/github_actions
+    - run: echo "${{secrets.DOCKERHUB_PASSWORD}}" | docker login -u ${{secrets.DOCKERHUB_USERNAME}} --password-stdin
+    - run: docker push saksham1807/github_actions:latest
